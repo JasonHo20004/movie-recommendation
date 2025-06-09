@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Movie Recommendation System
 
-## Getting Started
+A full-stack movie recommendation system built with Next.js, Express, and PostgreSQL.
 
-First, run the development server:
+## Project Structure
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+movie-recommendation/
+├── frontend/           # Next.js frontend application
+├── backend/           # Express.js backend server
+├── Dockerfile         # Docker configuration for the application
+├── docker-compose.yml # Docker Compose configuration
+└── .dockerignore     # Docker ignore rules
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Prerequisites
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Setup and Running
 
-## Learn More
+### Using Docker (Recommended)
 
-To learn more about Next.js, take a look at the following resources:
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd movie-recommendation
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Create a `.env` file in the root directory with the following variables:
+   ```env
+   # Frontend
+   NEXT_PUBLIC_API_URL=http://localhost:3001
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   # Backend
+   PORT=3001
+   DATABASE_URL=postgresql://postgres:postgres@db:5432/movie_recommendation
+   JWT_SECRET=your_jwt_secret_here
 
-## Deploy on Vercel
+   # Database
+   POSTGRES_USER=postgres
+   POSTGRES_PASSWORD=postgres
+   POSTGRES_DB=movie_recommendation
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Build and start the containers:
+   ```bash
+   docker-compose up --build
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   This will start:
+   - Frontend at http://localhost:3000
+   - Backend API at http://localhost:3001
+   - PostgreSQL database at localhost:5432
+
+4. To stop the containers:
+   ```bash
+   docker-compose down
+   ```
+
+### Manual Setup (Alternative)
+
+If you prefer to run the services without Docker:
+
+1. Install PostgreSQL locally and create a database named `movie_recommendation`
+
+2. Set up the backend:
+   ```bash
+   cd backend
+   npm install
+   npm run dev
+   ```
+
+3. Set up the frontend:
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+
+## Development
+
+- Frontend development server runs on http://localhost:3000
+- Backend API server runs on http://localhost:3001
+- API documentation is available at http://localhost:3001/api-docs
+
+## Environment Variables
+
+Make sure to set up the following environment variables:
+
+### Frontend (.env.local)
+- `NEXT_PUBLIC_API_URL`: URL of the backend API
+
+### Backend (.env)
+- `PORT`: Backend server port
+- `DATABASE_URL`: PostgreSQL connection string
+- `JWT_SECRET`: Secret key for JWT authentication
+
+### Database (docker-compose.yml)
+- `POSTGRES_USER`: PostgreSQL username
+- `POSTGRES_PASSWORD`: PostgreSQL password
+- `POSTGRES_DB`: Database name
+
+## Available Scripts
+
+### Frontend
+- `npm run dev`: Start development server
+- `npm run build`: Build for production
+- `npm start`: Start production server
+
+### Backend
+- `npm run dev`: Start development server
+- `npm run build`: Build for production
+- `npm start`: Start production server
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
