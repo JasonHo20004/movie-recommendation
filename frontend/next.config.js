@@ -6,9 +6,6 @@ const nextConfig = {
       'img.omdbapi.com', // OMDB images
     ],
   },
-  experimental: {
-    serverActions: true,
-  },
   // Enable styled-components
   compiler: {
     styledComponents: true,
