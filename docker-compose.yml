@@ -33,19 +33,5 @@ services:
       postgres:
         condition: service_healthy
 
-  prisma-studio:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: movie-recommendation-prisma-studio
-    command: npx prisma studio
-    ports:
-      - "5555:5555"
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/movie_recommendation?schema=public
-    depends_on:
-      postgres:
-        condition: service_healthy
-
 volumes:
   postgres_data: 

@@ -33,7 +33,6 @@ COPY --from=builder /app/frontend/public ./frontend/public
 COPY --from=builder /app/frontend/package*.json ./frontend/
 COPY --from=builder /app/backend/src ./backend/src
 COPY --from=builder /app/backend/package*.json ./backend/
-COPY --from=builder /app/prisma ./prisma
 
 # Create backend src directory if it doesn't exist
 RUN mkdir -p backend/src
@@ -46,9 +45,6 @@ RUN npm install --production && \
 
 # Create and set up startup script
 RUN echo '#!/bin/sh' > /app/start.sh && \
-    echo 'echo "Waiting for database..."' >> /app/start.sh && \
-    echo 'npx prisma generate' >> /app/start.sh && \
-    echo 'npx prisma migrate deploy' >> /app/start.sh && \
     echo 'echo "Starting application..."' >> /app/start.sh && \
     echo 'cd /app && /usr/local/bin/concurrently "npm run start:frontend" "npm run start:backend"' >> /app/start.sh && \
     chmod +x /app/start.sh

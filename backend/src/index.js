@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
-const { PrismaClient } = require('@prisma/client');
 const movieRoutes = require('./routes/movies');
 
 // Load environment variables
@@ -10,7 +9,6 @@ dotenv.config();
 
 // Initialize Express app
 const app = express();
-const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
@@ -41,8 +39,7 @@ app.listen(PORT, () => {
 });
 
 // Handle graceful shutdown
-process.on('SIGTERM', async () => {
-  console.log('SIGTERM received. Closing HTTP server and Prisma client...');
-  await prisma.$disconnect();
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received. Closing HTTP server...');
   process.exit(0);
 }); 
