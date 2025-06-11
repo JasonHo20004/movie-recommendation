@@ -1,26 +1,72 @@
 # Movie Recommendation System
 
-A full-stack movie recommendation system built with Next.js, Express, and PostgreSQL.
+A modern full-stack movie recommendation system built with Next.js, Express, and PostgreSQL. The application provides movie browsing, search, and personalized recommendations based on user ratings.
+
+## Features
+
+- 🎬 Browse and search movies
+- ⭐ Rate and review movies
+- 🔍 Advanced movie search with pagination
+- 🎯 Personalized movie recommendations
+- 🔐 User authentication and authorization
+- 📱 Responsive design for all devices
+- 🚀 Real-time updates with React Query
+- 🎨 Modern UI with Tailwind CSS and Styled Components
+
+## Tech Stack
+
+### Frontend
+- Next.js 14 (React Framework)
+- React Query for data fetching and caching
+- NextAuth.js for authentication
+- Styled Components & Tailwind CSS for styling
+- Zod for form validation
+- TypeScript for type safety
+
+### Backend
+- Express.js REST API
+- PostgreSQL database
+- JWT authentication
+- Database connection pooling
+- CORS enabled
+- Morgan for logging
+
+### Infrastructure
+- Docker & Docker Compose
+- PostgreSQL database
+- Environment-based configuration
 
 ## Project Structure
 
 ```
 movie-recommendation/
 ├── frontend/           # Next.js frontend application
+│   ├── app/           # Next.js app directory
+│   ├── components/    # React components
+│   ├── styles/        # Global styles
+│   ├── utils/         # Utility functions
+│   └── services/      # API service functions
 ├── backend/           # Express.js backend server
+│   ├── src/          # Source code
+│   │   ├── routes/   # API routes
+│   │   ├── models/   # Database models
+│   │   └── config/   # Configuration files
+│   └── db-init/      # Database initialization scripts
 ├── Dockerfile         # Docker configuration for the application
 ├── docker-compose.yml # Docker Compose configuration
 └── .dockerignore     # Docker ignore rules
 ```
 
-## Prerequisites
+## Getting Started
 
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18 or higher)
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
+- [Git](https://git-scm.com/downloads)
 
-## Setup and Running
-
-### Using Docker (Recommended)
+### Quick Start with Docker (Recommended)
 
 1. Clone the repository:
    ```bash
@@ -28,15 +74,18 @@ movie-recommendation/
    cd movie-recommendation
    ```
 
-2. Create a `.env` file in the root directory with the following variables:
+2. Create a `.env` file in the root directory:
    ```env
    # Frontend
    NEXT_PUBLIC_API_URL=http://localhost:3001
+   NEXTAUTH_URL=http://localhost:3000
+   NEXTAUTH_SECRET=your_nextauth_secret_here
 
    # Backend
    PORT=3001
    DATABASE_URL=postgresql://postgres:postgres@db:5432/movie_recommendation
    JWT_SECRET=your_jwt_secret_here
+   NODE_ENV=development
 
    # Database
    POSTGRES_USER=postgres
@@ -44,7 +93,7 @@ movie-recommendation/
    POSTGRES_DB=movie_recommendation
    ```
 
-3. Build and start the containers:
+3. Start the application:
    ```bash
    docker-compose up --build
    ```
@@ -54,65 +103,67 @@ movie-recommendation/
    - Backend API at http://localhost:3001
    - PostgreSQL database at localhost:5432
 
-4. To stop the containers:
+4. To stop the application:
    ```bash
    docker-compose down
    ```
 
 ### Manual Setup (Alternative)
 
-If you prefer to run the services without Docker:
+1. **Database Setup**
+   ```bash
+   # Install PostgreSQL locally
+   # Create a database named 'movie_recommendation'
+   createdb movie_recommendation
+   ```
 
-1. Install PostgreSQL locally and create a database named `movie_recommendation`
-
-2. Set up the backend:
+2. **Backend Setup**
    ```bash
    cd backend
    npm install
+   # Create .env file with the same variables as above
    npm run dev
    ```
 
-3. Set up the frontend:
+3. **Frontend Setup**
    ```bash
    cd frontend
    npm install
+   # Create .env.local file with the same variables as above
    npm run dev
    ```
 
 ## Development
 
-- Frontend development server runs on http://localhost:3000
-- Backend API server runs on http://localhost:3001
-- API documentation is available at http://localhost:3001/api-docs
+### Frontend Development
+- Development server: `npm run dev` (http://localhost:3000)
+- Build: `npm run build`
+- Production: `npm start`
+- Linting: `npm run lint`
 
-## Environment Variables
+### Backend Development
+- Development server: `npm run dev` (http://localhost:3001)
+- Build: `npm run build`
+- Production: `npm start`
 
-Make sure to set up the following environment variables:
+## Troubleshooting
 
-### Frontend (.env.local)
-- `NEXT_PUBLIC_API_URL`: URL of the backend API
+### Common Issues
 
-### Backend (.env)
-- `PORT`: Backend server port
-- `DATABASE_URL`: PostgreSQL connection string
-- `JWT_SECRET`: Secret key for JWT authentication
+1. **Database Connection Issues**
+   - Ensure PostgreSQL is running
+   - Check database credentials in `.env`
+   - Verify database exists: `createdb movie_recommendation`
 
-### Database (docker-compose.yml)
-- `POSTGRES_USER`: PostgreSQL username
-- `POSTGRES_PASSWORD`: PostgreSQL password
-- `POSTGRES_DB`: Database name
+2. **Port Conflicts**
+   - Ensure ports 3000 and 3001 are available
+   - Check if other services are using these ports
+   - Modify ports in `.env` if needed
 
-## Available Scripts
-
-### Frontend
-- `npm run dev`: Start development server
-- `npm run build`: Build for production
-- `npm start`: Start production server
-
-### Backend
-- `npm run dev`: Start development server
-- `npm run build`: Build for production
-- `npm start`: Start production server
+3. **Docker Issues**
+   - Clean Docker cache: `docker system prune -a`
+   - Rebuild containers: `docker-compose up --build --force-recreate`
+   - Check Docker logs: `docker-compose logs`
 
 ## Contributing
 
