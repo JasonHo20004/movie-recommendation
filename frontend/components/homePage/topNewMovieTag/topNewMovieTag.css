@@ -1,0 +1,30 @@
+.top-new-movie-tag{
+    
+}
+
+.top-new-movie-image{
+    height: 200px;
+    width: 300px;
+    object-fit: cover;
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 10px;
+    border: black 2px solid;
+}
+
+.top-new-movie-image:hover{
+    border: orange 2px solid;
+}
+
+.top-new-movie-rating{
+
+}
+
+.top-new-movie-title{
+
+}
+
+.top-new-movie-title:hover{
+    color: goldenrod;
+    cursor: pointer;
+}

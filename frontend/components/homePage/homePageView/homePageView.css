@@ -1,0 +1,16 @@
+.content{
+    padding-top: 100px;
+    align-items: center;
+}
+
+.headerBar{
+    position: fixed;
+    margin: 0px;
+    z-index: 10;
+}
+
+body{
+    margin: 0px;
+    overflow-x: hidden;
+    max-width: 2000px;
+}

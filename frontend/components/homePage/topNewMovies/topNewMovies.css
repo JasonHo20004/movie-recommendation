@@ -1,0 +1,39 @@
+.top-new-movies-topic{
+    min-width: 200px;
+    max-width: 200px;
+}
+
+.firstPlace{
+    background: linear-gradient(90deg, #800080, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.seccondPlace{
+    background: linear-gradient(90deg, #cf7608, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}   
+
+.thirdPlace{
+    background: linear-gradient(90deg, #cd087b, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.top-new-movies{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.container{
+    width: 1200px;
+}
+
+.splide__arrow--prev {
+  left: 10px; /* hoặc giá trị phù hợp */
+}
+.splide__arrow--next {
+  right: 90px;
+}
