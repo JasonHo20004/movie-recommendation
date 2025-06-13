@@ -23,10 +23,10 @@ const nextConfig = {
     // Enable modern optimizations
     optimizeCss: true,
     optimizePackageImports: ['@heroicons/react', '@headlessui/react'],
-    // Enable modern image optimization
+    // Enable modern image optimization with new turbo rules format
     turbo: {
-      loaders: {
-        '.svg': ['@svgr/webpack'],
+      rules: {
+        '*.svg': ['@svgr/webpack'],
       },
     },
   },
