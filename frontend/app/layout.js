@@ -1,8 +1,14 @@
-import { Inter } from 'next/font/google'
+import localFont from 'next/font/local'
 import { Providers } from '@/providers'
 import '@/styles/globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+// Use local font instead of Google Fonts for better reliability
+const inter = localFont({
+  src: '../fonts/Inter-Regular.woff2',
+  variable: '--font-inter',
+  display: 'swap',
+  preload: true,
+})
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
@@ -56,7 +62,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`${inter.variable} font-sans`}>
         <Providers>
           {children}
         </Providers>

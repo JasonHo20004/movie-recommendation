@@ -41,6 +41,16 @@ const nextConfig = {
 
   // Enable modern webpack optimizations
   webpack: (config, { dev, isServer }) => {
+    // Handle crypto module
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        crypto: require.resolve('crypto-browserify'),
+        stream: require.resolve('stream-browserify'),
+        buffer: require.resolve('buffer/'),
+      }
+    }
+
     // Optimize bundle size
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
@@ -94,4 +104,4 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig 
+module.exports = nextConfig
