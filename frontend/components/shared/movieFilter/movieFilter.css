@@ -1,0 +1,27 @@
+.movie-filter{
+    position: relative;
+    margin-left: 70px;
+    margin-right: 70px;
+    cursor: pointer;
+}
+
+.filter-active{
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+}
+
+.filter-icon{
+    height: 40px !important;
+    width: 40px !important;
+}
+
+.filter-options{
+    height: auto;
+    width: 100%;
+    background-color: white;
+    margin: 15px;
+    border: black 3px solid;
+    border-radius: 50px;
+    border-top-left-radius: 0px !important;
+}

@@ -1,13 +1,5 @@
 import './listTopics.css'
-
-function TopicTag({topic, color}){
-    return(
-        <div className="topic-tag" style={{backgroundColor: color}}>
-            <h3>{topic}</h3>
-            <p>Xem toàn bộ ᐳ</p>
-        </div>
-    )
-}
+import TopicTag from '../../shared/topicTag/topicTag';
 
 function getRandomColor() {
     // Tạo mã màu hex ngẫu nhiên

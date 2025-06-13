@@ -1,18 +1,7 @@
 'use client';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import './listMovies.css'
-
-function MovieTag({movie}){
-    return(
-        <div>
-            <div className="movie-tag">
-                <img className='movie-image' src={movie.image} alt=""/>
-                <div className="movie-rating"></div>
-                <div className="movie-title">{movie.title}</div>
-            </div>
-        </div>
-    )
-}
+import MovieTag from '../../shared/movieTag/movieTag'
 
 function ListMovies({category}){
     return(

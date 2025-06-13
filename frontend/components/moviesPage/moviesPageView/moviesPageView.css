@@ -1,0 +1,68 @@
+.film-page-view{
+    padding-top: 100px;
+}
+
+.film-list-view{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}   
+
+.film-grid{
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+}
+
+.row-direct{
+    display: flex;
+    flex-direction: row;
+}
+
+.column-direct{
+    display: flex;
+    flex-direction: column;
+}
+
+.page-change{
+    gap: 10px;
+}
+
+.page-element{
+    display: flex;
+    border-radius: 40px;
+    border: black 3px solid;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow{
+    height: 50px;
+    width: 50px;
+    font-size: 50px;
+    padding-bottom: 10px;
+    cursor: pointer;
+}
+
+.arrow:hover{
+    color: orange;
+    border: orange 3px solid;
+}
+
+.page-number{
+    display: flex;
+    height: 50px;
+    width: 150px;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+#page-index-number{
+    height: 30px;
+    width: 50px;
+}
+
+#page-total-number{
+    padding-top: 14px;
+}
