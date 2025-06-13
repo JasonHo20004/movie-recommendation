@@ -1,0 +1,43 @@
+.options-line{
+    position: relative;
+    padding: 5px;
+}
+
+.title-side{
+    display: flex;
+    justify-content: end;
+    width: 150px;
+}
+
+.options-side{
+    padding-left: 10px;
+    flex-wrap: wrap;
+}
+
+.option{
+    border-radius: 20px;
+    color: orange;
+    background-color: white;
+    border: orange 1px solid;
+    margin: 2px;
+}
+
+.option-selected{
+    border-radius: 20px;
+    color: white;
+    background-color: goldenrod;
+    border: goldenrod 1px solid;
+    margin: 2px;
+    box-shadow: 0 0 10px 2px orange, 0 0 20px 4px #ffb347;
+    transition: box-shadow 0.3s;
+}
+
+.option-selected:hover{
+    box-shadow: 0 0 10px 2px white, 0 0 20px 4px white;
+    transition: box-shadow 0.3s;
+}
+
+.option:hover{
+    color: white;
+    background-color: orange;
+}

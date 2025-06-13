@@ -3,6 +3,7 @@
 }
 
 .film-list-view{
+    padding-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;

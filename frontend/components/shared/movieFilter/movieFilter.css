@@ -1,7 +1,6 @@
 .movie-filter{
     position: relative;
     margin-left: 70px;
-    margin-right: 70px;
     cursor: pointer;
 }
 
@@ -24,4 +23,18 @@
     border: black 3px solid;
     border-radius: 50px;
     border-top-left-radius: 0px !important;
+}
+
+.filter-button{
+    width: 200px;
+    height: 40px;
+    margin-left: 160px;
+    margin-top: 10px;
+    border-radius: 30px;
+    color: white;
+    background-color: rgba(255, 166, 0, 0.614);
+}
+
+.filter-button:hover{
+    background-color: orange;
 }
