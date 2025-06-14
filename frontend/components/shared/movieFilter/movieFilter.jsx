@@ -1,7 +1,8 @@
 'use client'
 import './movieFilter.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import FilterOptionsLine from '../filterOptionsLine/filterOptionsLine';
+import FilterSelectOptions from '../filterSelectOptions/filterSelectOptions';
+import FilterSortByOptions from '../filterSortByOptions/filterSortByOptions';
 import {useState, useEffect} from 'react'
 
 let filterOptions = [
@@ -37,11 +38,14 @@ let filterOptions = [
             {option: "2021", isSelected: false},
             {option: "2020", isSelected: false}
         ]
-    },
+    }
+]
+
+let filterSortByOptions =[
     {
         title: "Sắp xếp theo",
         options: [
-            {option: "Mới nhất", isSelected: false},
+            {option: "Mới nhất", isSelected: true},
             {option: "Điểm đánh giá", isSelected: false},
             {option: "Lượt xem", isSelected: false}
         ]
@@ -62,6 +66,27 @@ function MovieFilter(){
         }
     }
 
+    // useEffect(()=>{
+    //     console.log(moviesFilterOptions)
+    // },[moviesFilterOptions])
+
+    function changeFilterOption(title, selectedOptions) {
+        setmoviesFilterOptions(prevOptions => 
+            prevOptions.map(group => {
+                if (group.title === title) {
+                    return {
+                        ...group,
+                        options: group.options.map(opt => ({
+                            ...opt,
+                            isSelected: selectedOptions.includes(opt.option)
+                        }))
+                    };
+                }
+                return group;
+            })
+        );
+    }
+
     return(
         <div className="movie-filter" 
             onMouseEnter={()=>setFilterHover(true)} 
@@ -75,7 +100,10 @@ function MovieFilter(){
             <div className="filter-options p-4" style={{display: isFilterShow ? 'flex':'none'}}>
                 <div className='d-flex flex-column'>
                     {filterOptions.map((optionsLine, index)=>(
-                        <FilterOptionsLine key={index} title={optionsLine.title} options={optionsLine.options}/>
+                        <FilterSelectOptions key={index} title={optionsLine.title} options={optionsLine.options} onClick={(changeFilterOption)}/>
+                    ))}
+                    {filterSortByOptions.map((optineLine, index)=>(
+                        <FilterSortByOptions key={index} title={optineLine.title} options={optineLine.options}/>
                     ))}
                     <button className='filter-button'>Lọc kết quả</button>
                 </div>

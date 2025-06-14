@@ -1,6 +1,6 @@
 'use client'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './filterOptionsLine.css'
+import './filterSelectOptions.css'
 import { useEffect, useState } from 'react';
 
 function FilterOption({option, isSelected, onClick, isAll}){
@@ -21,9 +21,13 @@ function FilterOption({option, isSelected, onClick, isAll}){
     )
 }
 
-function FilterOptionsLine({title, options}){
+function FilterSelectOptions({title, options, onClick}){
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [isAllSelected, setAllSelected] = useState(true)
+
+    useEffect(()=>{
+        onClick(title, selectedOptions)
+    },[selectedOptions])
 
     useEffect(()=>{
         if(selectedOptions.length===0){setAllSelected(true)}
@@ -50,7 +54,7 @@ function FilterOptionsLine({title, options}){
                 {title}:
             </div>
             <div className="options-side d-flex flex-row">
-                <FilterOption 
+                <FilterOption
                     option={'tất cả'} 
                     isSelected={isAllSelected}
                     onClick={handleChangeSelectedClick}
@@ -68,4 +72,4 @@ function FilterOptionsLine({title, options}){
     ) 
 }
 
-export default FilterOptionsLine
+export default FilterSelectOptions
