@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import FilterSelectOptions from '../filterSelectOptions/filterSelectOptions';
 import FilterSortByOptions from '../filterSortByOptions/filterSortByOptions';
 import {useState, useEffect} from 'react'
+import { Prev } from 'react-bootstrap/esm/PageItem';
 
 let filterOptions = [
     {
@@ -56,6 +57,7 @@ function MovieFilter(){
     const [isFilterHover, setFilterHover] = useState(false)
     const [isFilterShow, setFilterShow] = useState(false)
     const [moviesFilterOptions, setmoviesFilterOptions] = useState(filterOptions)
+    const [movieSortByOption, setMovieSortByOption] = useState(filterSortByOptions[0].options.find(opt => opt.isSelected))
     
     function changeFilterState(){
         if(!isFilterShow){
@@ -87,6 +89,11 @@ function MovieFilter(){
         );
     }
 
+    function changeSortByOption(option){
+        setMovieSortByOption(option)
+        console.log(option)
+    }
+
     return(
         <div className="movie-filter" 
             onMouseEnter={()=>setFilterHover(true)} 
@@ -103,7 +110,7 @@ function MovieFilter(){
                         <FilterSelectOptions key={index} title={optionsLine.title} options={optionsLine.options} onClick={(changeFilterOption)}/>
                     ))}
                     {filterSortByOptions.map((optineLine, index)=>(
-                        <FilterSortByOptions key={index} title={optineLine.title} options={optineLine.options}/>
+                        <FilterSortByOptions key={index} title={optineLine.title} options={optineLine.options} onClick={changeSortByOption} selectedOption={movieSortByOption.option}/>
                     ))}
                     <button className='filter-button'>Lọc kết quả</button>
                 </div>

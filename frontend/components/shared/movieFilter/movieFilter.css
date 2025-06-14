@@ -1,6 +1,7 @@
 .movie-filter{
     position: relative;
     margin-left: 70px;
+    margin-right: 80px;
     cursor: pointer;
 }
 
