@@ -1,10 +1,10 @@
-import localFont from 'next/font/local'
+import { Inter } from 'next/font/google'
 import { Providers } from '@/providers'
 import '@/styles/globals.css'
 
-// Use local font instead of Google Fonts for better reliability
-const inter = localFont({
-  src: '../fonts/Inter-Regular.woff2',
+// Use Google Fonts instead of local font
+const inter = Inter({
+  subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
   preload: true,
