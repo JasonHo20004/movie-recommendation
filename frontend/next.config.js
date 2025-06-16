@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const webpack = require('webpack')
+
 const nextConfig = {
   // Enable React strict mode for better development
   reactStrictMode: true,
@@ -21,7 +23,10 @@ const nextConfig = {
       allowedOrigins: ['localhost:3000', 'your-production-domain.com'],
     },
     // Enable modern optimizations
-    optimizeCss: true,
+    optimizeCss: {
+      // Disable CSS optimization for error pages
+      exclude: ['/404', '/500', '/_error'],
+    },
     optimizePackageImports: ['@heroicons/react', '@headlessui/react'],
     // Enable modern image optimization with new turbo rules format
     turbo: {
@@ -41,14 +46,33 @@ const nextConfig = {
 
   // Enable modern webpack optimizations
   webpack: (config, { dev, isServer }) => {
-    // Handle crypto module
+    // Handle crypto module and other Node.js polyfills
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
         crypto: require.resolve('crypto-browserify'),
         stream: require.resolve('stream-browserify'),
         buffer: require.resolve('buffer/'),
+        util: require.resolve('util/'),
+        assert: require.resolve('assert/'),
+        http: require.resolve('stream-http'),
+        https: require.resolve('https-browserify'),
+        os: require.resolve('os-browserify/browser'),
+        url: require.resolve('url/'),
+        fs: false,
+        net: false,
+        tls: false,
+        zlib: false,
+        path: false,
       }
+
+      // Add Buffer polyfill
+      config.plugins.push(
+        new webpack.ProvidePlugin({
+          Buffer: ['buffer', 'Buffer'],
+          process: 'process/browser',
+        })
+      )
     }
 
     // Optimize bundle size
