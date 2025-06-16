@@ -1,5 +1,5 @@
 # Build stage
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 # Set working directory
 WORKDIR /app
@@ -9,19 +9,24 @@ COPY package*.json ./
 COPY frontend/package*.json ./frontend/
 COPY backend/package*.json ./backend/
 
-# Install dependencies
-RUN npm run install:all
+# Install dependencies and crypto polyfill
+RUN apk add --no-cache openssl && \
+    npm run install:all && \
+    cd frontend && \
+    npm install assert buffer crypto-browserify https-browserify os-browserify process stream-browserify stream-http url util critters && \
+    cd ..
 
 # Copy the rest of the application
 COPY . .
 
 # Build the frontend application
-RUN npm run build:frontend
+ENV NODE_OPTIONS="--openssl-legacy-provider"
+RUN cd frontend && npm run build
 
 # Production stage
-FROM node:18-alpine AS runner
+FROM node:20-alpine AS runner
 
-# Install OpenSSL
+# Install OpenSSL and other dependencies
 RUN apk add --no-cache openssl
 
 WORKDIR /app
@@ -37,21 +42,23 @@ COPY --from=builder /app/backend/package*.json ./backend/
 # Create backend src directory if it doesn't exist
 RUN mkdir -p backend/src
 
-# Install production dependencies and concurrently globally
+# Install production dependencies
 RUN npm install --production && \
-    npm install -g concurrently && \
-    cd frontend && npm install --production && \
-    cd ../backend && npm install --production
+    cd frontend && \
+    npm install --production && \
+    cd ../backend && \
+    npm install --production
 
 # Create and set up startup script
 RUN echo '#!/bin/sh' > /app/start.sh && \
     echo 'echo "Starting application..."' >> /app/start.sh && \
-    echo 'cd /app && /usr/local/bin/concurrently "npm run start:frontend" "npm run start:backend"' >> /app/start.sh && \
+    echo 'cd /app && npm run start:frontend & npm run start:backend' >> /app/start.sh && \
     chmod +x /app/start.sh
 
 # Set environment variables
 ENV NODE_ENV=production
 ENV PATH="/usr/local/bin:${PATH}"
+ENV NODE_OPTIONS="--openssl-legacy-provider"
 
 # Expose ports
 EXPOSE 3000 3001
