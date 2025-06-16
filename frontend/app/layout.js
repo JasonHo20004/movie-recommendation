@@ -1,4 +1,4 @@
-import { Inter } from 'next/font/google'
+import { Inter, Libre_Baskerville } from 'next/font/google'
 import { Providers } from '@/providers'
 import '@/styles/globals.css'
 
@@ -6,6 +6,15 @@ import '@/styles/globals.css'
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
+  display: 'swap',
+  preload: true,
+})
+
+const libreBaskerville = Libre_Baskerville({
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  variable: '--font-libre-baskerville',
   display: 'swap',
   preload: true,
 })
@@ -62,7 +71,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans`}>
+      <body className={`${inter.variable} ${libreBaskerville.variable} font-sans`}>
         <Providers>
           {children}
         </Providers>
