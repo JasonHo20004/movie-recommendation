@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS subscription_plans (
     name VARCHAR(100) NOT NULL,
     description TEXT,
     cost DECIMAL(10,2) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create accounts table
@@ -30,17 +30,16 @@ CREATE TABLE IF NOT EXISTS accounts (
     FOREIGN KEY (subscription_plan_id) REFERENCES subscription_plans(id)
 );
 
--- Create user settings table
+-- 4. Các bảng người dùng và giao dịch
 CREATE TABLE IF NOT EXISTS user_settings (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    autoplay_next BOOLEAN DEFAULT true,
-    preferred_quality VARCHAR(20) DEFAULT 'HD',
-    language_preferences VARCHAR(50) DEFAULT 'en',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    autoplay_next BOOLEAN NOT NULL DEFAULT true,
+    preferred_quality VARCHAR(20) NOT NULL DEFAULT 'HD',
+    language_preferences VARCHAR(50) NOT NULL DEFAULT 'en',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create user profiles table
 CREATE TABLE IF NOT EXISTS user_profiles (
     profile_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     profile_name VARCHAR(100) NOT NULL,
@@ -56,7 +55,7 @@ CREATE TABLE IF NOT EXISTS transactions (
     transaction_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     status status_enum NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
-    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     type video_type_enum NOT NULL,
     quality_purchased video_quality_enum,
     plan_type transaction_type_enum,
@@ -64,27 +63,40 @@ CREATE TABLE IF NOT EXISTS transactions (
     FOREIGN KEY (user_profile_id) REFERENCES user_profiles(profile_id)
 );
 
--- Create nations table
-CREATE TABLE IF NOT EXISTS nations (
+-- 5. TV Series và phân cấp
+CREATE TABLE IF NOT EXISTS tv_series (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    name VARCHAR(100) NOT NULL UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    media_content_id UUID NOT NULL UNIQUE REFERENCES media_content(id) ON DELETE CASCADE,
+    total_of_seasons INTEGER NOT NULL DEFAULT 1 CHECK (total_of_seasons > 0),
+    total_of_episodes INTEGER NOT NULL DEFAULT 0 CHECK (total_of_episodes >= 0),
+    nation_id UUID NOT NULL REFERENCES nations(id),
+    status VARCHAR(20) NOT NULL DEFAULT 'ongoing' CHECK (status IN ('ongoing','completed','cancelled')),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create genres table
-CREATE TABLE IF NOT EXISTS genres (
+CREATE TABLE IF NOT EXISTS seasons (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    name VARCHAR(50) NOT NULL UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Create creatives table
-CREATE TABLE IF NOT EXISTS creatives (
-    creative_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    name VARCHAR(255) NOT NULL,
+    tv_series_id UUID NOT NULL REFERENCES tv_series(id) ON DELETE CASCADE,
+    season_number INTEGER NOT NULL CHECK (season_number > 0),
+    number_of_episodes INTEGER NOT NULL DEFAULT 0 CHECK (number_of_episodes >= 0),
+    release_date DATE,
+    title VARCHAR(255),
     description TEXT,
-    role role_enum NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS episodes (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    season_id UUID NOT NULL REFERENCES seasons(id) ON DELETE CASCADE,
+    episode_number INTEGER NOT NULL CHECK (episode_number > 0),
+    title VARCHAR(255) NOT NULL,
+    duration_in_minutes INTEGER NOT NULL CHECK (duration_in_minutes > 0),
+    release_date DATE,
+    description TEXT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create topics table
@@ -237,7 +249,6 @@ CREATE TABLE IF NOT EXISTS comments (
     CHECK ((media_content_id IS NOT NULL AND episode_id IS NULL) OR (media_content_id IS NULL AND episode_id IS NOT NULL))
 );
 
--- Create user interaction metrics table
 CREATE TABLE IF NOT EXISTS user_interaction_metrics (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_profile_id UUID NOT NULL,
