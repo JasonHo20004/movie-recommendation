@@ -13,7 +13,7 @@ COPY backend/package*.json ./backend/
 RUN apk add --no-cache openssl && \
     npm run install:all && \
     cd frontend && \
-    npm install assert buffer crypto-browserify https-browserify os-browserify process stream-browserify stream-http url util critters && \
+    npm install assert buffer crypto-browserify https-browserify os-browserify process stream-browserify stream-http url util critters css-what && \
     cd ..
 
 # Copy the rest of the application
@@ -21,6 +21,7 @@ COPY . .
 
 # Build the frontend application
 ENV NODE_OPTIONS="--openssl-legacy-provider"
+ENV NEXT_TELEMETRY_DISABLED=1
 RUN cd frontend && npm run build
 
 # Production stage
@@ -59,6 +60,7 @@ RUN echo '#!/bin/sh' > /app/start.sh && \
 ENV NODE_ENV=production
 ENV PATH="/usr/local/bin:${PATH}"
 ENV NODE_OPTIONS="--openssl-legacy-provider"
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # Expose ports
 EXPOSE 3000 3001

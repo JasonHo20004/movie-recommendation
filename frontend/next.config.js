@@ -22,11 +22,8 @@ const nextConfig = {
     serverActions: {
       allowedOrigins: ['localhost:3000', 'your-production-domain.com'],
     },
-    // Enable modern optimizations
-    optimizeCss: {
-      // Disable CSS optimization for error pages
-      exclude: ['/404', '/500', '/_error'],
-    },
+    // Disable CSS optimization to prevent css-what issues
+    optimizeCss: false,
     optimizePackageImports: ['@heroicons/react', '@headlessui/react'],
     // Enable modern image optimization with new turbo rules format
     turbo: {
