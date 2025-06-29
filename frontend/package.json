@@ -1,49 +1,27 @@
 {
-  "name": "movie-recommendation",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@svgr/webpack": "^8.1.0",
-    "@tanstack/react-query": "^5.80.7",
-    "buffer": "^6.0.3",
-    "crypto-browserify": "^3.12.0",
-    "lru-cache": "^10.2.0",
-    "next": "14.2.29",
-    "next-auth": "^4.24.11",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "stream-browserify": "^3.0.0",
-    "styled-components": "^6.1.8",
-    "zod": "^3.25.64",
-    "assert": "^2.1.0",
-    "https-browserify": "^1.0.0",
-    "os-browserify": "^0.3.0",
-    "process": "^0.11.10",
-    "stream-http": "^3.2.0",
-    "url": "^0.11.3",
-    "util": "^0.12.5",
-    "critters": "^0.0.20",
-    "css-what": "^6.1.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "next": "15.3.4"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.17",
-    "eslint": "^8.56.0",
-    "eslint-config-next": "14.2.29",
-    "glob": "^10.3.10",
-    "postcss": "^8.4.35",
-    "rimraf": "^5.0.5",
-    "tailwindcss": "^3.4.1"
-  },
-  "resolutions": {
-    "@eslint/config-array": "latest",
-    "@eslint/object-schema": "latest",
-    "glob": "^10.3.10",
-    "rimraf": "^5.0.5"
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.4",
+    "@eslint/eslintrc": "^3"
   }
 }
